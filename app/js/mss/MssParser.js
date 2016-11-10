@@ -282,14 +282,15 @@ Mss.dependencies.MssParser = function() {
                 chunks = this.domParser.getChildNodes(streamIndex, "c"),
                 segments = [],
                 i,
-                t, d;
+                t, t_manifest, d;
 
             for (i = 0; i < chunks.length; i++) {
                 // Get time and duration attributes
-                t = parseFloat(this.domParser.getAttributeValue(chunks[i], "t"));
+                t = t_manifest = parseFloat(this.domParser.getAttributeValue(chunks[i], "t"));
                 d = parseFloat(this.domParser.getAttributeValue(chunks[i], "d"));
 
-                if ((i === 0) && !t) {
+                //if ((i === 0) && !t) {
+				if ((i === 0)) {
                     t = 0;
                 }
 
@@ -307,7 +308,8 @@ Mss.dependencies.MssParser = function() {
                 // Create new segment
                 segments.push({
                     d: d,
-                    t: t
+                    t: t,
+					t_manifest: t_manifest
                 });
 
             }

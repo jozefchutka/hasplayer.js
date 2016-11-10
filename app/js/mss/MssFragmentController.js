@@ -59,7 +59,7 @@ Mss.dependencies.MssFragmentController = function() {
                     break;
                 }
             }
-
+/*
             if (segmentId >= 0) {
                 for (i = 0; i < entries.length; i += 1) {
                     if (segmentId + i < segments.length) {
@@ -73,7 +73,7 @@ Mss.dependencies.MssFragmentController = function() {
                     }
                 }
             }
-
+*/
             //
             if (manifest.timeShiftBufferDepth && manifest.timeShiftBufferDepth > 0) {
                 if (segmentsUpdated) {

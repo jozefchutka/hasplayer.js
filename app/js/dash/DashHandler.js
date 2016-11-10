@@ -587,7 +587,16 @@ Dash.dependencies.DashHandler = function() {
             seg.replacementNumber = getNumberForSegment(seg, index);
 
             url = replaceTokenForTemplate(url, "Number", seg.replacementNumber);
-            url = replaceTokenForTemplate(url, "Time", seg.replacementTime);
+            //url = replaceTokenForTemplate(url, "Time", seg.replacementTime);
+			
+			var adaptationSet = representation.adaptation.period.mpd.manifest.Period.AdaptationSet;
+			if(representation.id.indexOf("video") != -1)
+				var delta = adaptationSet[0].Representation[0].SegmentTemplate.SegmentTimeline.S[0].t_manifest;
+			else if(representation.id.indexOf("audio") != -1)
+				var delta = adaptationSet[1].Representation.SegmentTemplate.SegmentTimeline.S[0].t_manifest;
+			url = replaceTokenForTemplate(url, "Time", seg.replacementTime + delta);
+			
+			
             seg.media = url;
             seg.mediaRange = range;
             seg.availabilityIdx = index;
