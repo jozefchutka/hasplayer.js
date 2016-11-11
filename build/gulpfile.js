@@ -54,7 +54,7 @@ if (argv.protection) {
 }
 
 if (argv.hls) {
-    sourcesGlob = sourcesGlob.concat(sources.hls);
+    //sourcesGlob = sourcesGlob.concat(sources.hls);
 }
 
 if (argv.mss) {

@@ -26,6 +26,8 @@ Learn more about versions and roadmap on the [wiki](https://github.com/Orange-Op
 
 ### Build / Run
 
+npm install (nodejs 6.9.1)
+cd build
 npm run build
 
 The build task can be configured in order to select supported protocol(s) and to integrate or not EME support.

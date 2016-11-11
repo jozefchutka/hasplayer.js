@@ -599,7 +599,7 @@ Dash.dependencies.DashHandler = function() {
                     } else if(reps.id === representation.id)
                         return reps;
                 }
-            }
+            };
             
             var delta = 0;
             try {
