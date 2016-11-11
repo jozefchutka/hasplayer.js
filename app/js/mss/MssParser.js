@@ -280,6 +280,7 @@ Mss.dependencies.MssParser = function() {
 
             var segmentTimeline = {},
                 chunks = this.domParser.getChildNodes(streamIndex, "c"),
+                isLive = Boolean(this.domParser.getAttributeValue(this.domParser.getChildNode(xmlDoc, "SmoothStreamingMedia"), 'IsLive')),
                 segments = [],
                 i,
                 t, t_manifest, d;
@@ -290,7 +291,7 @@ Mss.dependencies.MssParser = function() {
                 d = parseFloat(this.domParser.getAttributeValue(chunks[i], "d"));
 
                 //if ((i === 0) && !t) {
-				if ((i === 0)) {
+                if ((i === 0) && (!isLive || !t)) {
                     t = 0;
                 }
 
@@ -308,8 +309,8 @@ Mss.dependencies.MssParser = function() {
                 // Create new segment
                 segments.push({
                     d: d,
-                    t: t,
-					t_manifest: t_manifest
+                    t_manifest: t_manifest,
+                    t: t
                 });
 
             }

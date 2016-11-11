@@ -587,16 +587,28 @@ Dash.dependencies.DashHandler = function() {
             seg.replacementNumber = getNumberForSegment(seg, index);
 
             url = replaceTokenForTemplate(url, "Number", seg.replacementNumber);
+
+            var getRepresentationById = function() {
+                var adaptationSets = representation.adaptation.period.mpd.manifest.Period.AdaptationSet;
+                for(var ia in adaptationSets) {
+                    var reps = adaptationSets[ia].Representation;
+                    if(reps.constructor === Array) {
+                        for(var ir in reps)
+                            if(reps[ir].id === representation.id)
+                                return reps[ir];
+                    } else if(reps.id === representation.id)
+                        return reps;
+                }
+            }
+            
+            var delta = 0;
+            try {
+                if(representation.adaptation.period.mpd.manifest.type !== "dynamic")
+                    delta = getRepresentationById().SegmentTemplate.SegmentTimeline.S[0].t_manifest;
+            } catch(error){}
+            url = replaceTokenForTemplate(url, "Time", seg.replacementTime + delta);
             //url = replaceTokenForTemplate(url, "Time", seg.replacementTime);
-			
-			var adaptationSet = representation.adaptation.period.mpd.manifest.Period.AdaptationSet;
-			if(representation.id.indexOf("video") != -1)
-				var delta = adaptationSet[0].Representation[0].SegmentTemplate.SegmentTimeline.S[0].t_manifest;
-			else if(representation.id.indexOf("audio") != -1)
-				var delta = adaptationSet[1].Representation.SegmentTemplate.SegmentTimeline.S[0].t_manifest;
-			url = replaceTokenForTemplate(url, "Time", seg.replacementTime + delta);
-			
-			
+
             seg.media = url;
             seg.mediaRange = range;
             seg.availabilityIdx = index;
